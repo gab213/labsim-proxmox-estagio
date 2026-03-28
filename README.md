@@ -757,7 +757,7 @@ pve4 -> https://10.17.5.213:8006/
 
 ---
 
-## 30. Mensagem final
+### 30. Lembrete
 
 Este cluster não é só um conjunto de máquinas virtualizadas.  
 Ele representa a criação de uma base prática para aprender fazendo.
@@ -1225,15 +1225,3 @@ systemctl status pve-cluster corosync pveproxy pvedaemon pvestatd
 Esse bloco não resolve tudo, mas separa rápido se o problema está em rede, cluster, storage, serviço ou VM.
 
 ---
-
-## 35. Fechamento da versão 2 do README
-
-Com estas adições, o repositório passa a ter uma documentação mais completa para uso real do cluster do LabSim, cobrindo:
-
-- narrativa e propósito do projeto;
-- arquitetura lógica do ambiente;
-- proposta de acesso por VPN;
-- criação de templates via interface e via CLI;
-- troubleshooting básico e recorrente.
-
-Isso deixa o material mais útil não só para leitura institucional, mas para a operação prática do dia a dia.
