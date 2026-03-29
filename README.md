@@ -6,11 +6,11 @@
 
 ## 1. Visão geral
 
-Este projeto nasceu de uma necessidade simples e extremamente prática: o **LabSim** possuía quatro workstations sem uso produtivo, enquanto as disciplinas e atividades de laboratório ligadas a **redes móveis**, **virtualização**, **sistemas distribuídos**, **orquestração** e **infraestrutura** exigiam um ambiente mais flexível, reproduzível e moderno para aulas, testes e pesquisa aplicada.
+Este projeto visa sanar uma necessidade simples e extremamente prática: o **LabSim** possuía quatro workstations sem uso produtivo, enquanto as disciplinas e atividades de laboratório ligadas a **redes móveis**, **virtualização**, **sistemas distribuídos**, **orquestração** e **infraestrutura** exigiam um ambiente mais flexível, reproduzível e moderno para aulas, testes e pesquisa aplicada.
 
-A proposta, então, foi transformar esse hardware ocioso em um **testbed de virtualização de datacenter**, baseado em **Proxmox VE**, capaz de sustentar a criação de múltiplos ambientes de laboratório sob demanda.
+A proposta, então, foi transformar esse hardware ocioso em um **testbed de virtualização de datacenter**, baseado em **Proxmox VE**, capaz de sustentar a criação de ambientes de laboratórios controlados, sob demanda, para alunos.
 
-Na prática, isso permite que alunos, monitores e professores possam criar e operar **máquinas virtuais e ambientes isolados**, com liberdade para instalar sistemas operacionais como:
+Na prática, isso permite que alunos, monitores e professores possam utilizar, criar e operar **máquinas virtuais e ambientes isolados**, com liberdade para instalar quaisquer sistemas operacionais como:
 
 - Ubuntu
 - Debian
@@ -32,7 +32,7 @@ Além disso, o ambiente passa a suportar a instalação e execução de ferramen
 - Git
 - linguagens e pacotes diversos para automação, análise, observabilidade e desenvolvimento
 
-O resultado é um laboratório muito mais útil, vivo e reaproveitável. Em vez de máquinas paradas, o LabSim passa a ter um **datacenter didático virtualizado**, pronto para apoiar aulas, TCCs, pesquisas, provas de conceito e treinamento prático.
+O resultado é um laboratório muito mais útil, vivo e reaproveitável. Reaproveitando sua proprias máquinas paradas, o LabSim passa a ter um **datacenter didático virtualizado**, pronto para apoiar aulas, IC's, TCCs, pesquisas, pequenas provas de conceito e treinamento prático.
 
 ---
 
@@ -119,7 +119,7 @@ A escolha do **Proxmox VE** faz sentido neste cenário por vários motivos:
 - funciona muito bem em ambiente de laboratório e pesquisa;
 - reduz barreira de entrada para quem está começando.
 
-Em bom português: ele entrega muita coisa útil sem transformar o laboratório num ritual de sofrimento. E isso ajuda muito quando o foco é ensino.
+Ou seja: o proprio proxmox, em si, é um sistema open-source, com constantes atualizações de suas funcionalidades, e isso entrega muita coisa útil sem transformar a virtualização do datacenter, num conhecimento propriétario. E isso ajuda muito quando o foco é ensino.
 
 ---
 
@@ -157,14 +157,14 @@ A criação deste testbed traz ganhos técnicos e acadêmicos concretos.
 Este ambiente foi pensado para suportar, entre outros, os seguintes cenários:
 
 - criação de VMs Linux para aulas práticas;
-- instalação de **OpenAirInterface (OAI)** para experimentos RAN/Core;
-- instalação de **UERANSIM** para geração de UE/gNB simulados;
-- instalação de **Open5GS** ou **free5GC** para core de rede;
-- uso de **Docker** para empacotamento de serviços de laboratório;
-- análise de tráfego com **Wireshark**, **tcpdump** e **tshark**;
-- testes de conectividade, portas e serviços com **Nmap**;
-- uso de **Git** para versionamento de artefatos das disciplinas;
-- instalação de stacks complementares de desenvolvimento e automação.
+- possibilidade da instalação de **OpenAirInterface (OAI)** para experimentos RAN/Core;
+- possibilidade da instalação de **UERANSIM** para geração de UE/gNB simulados;
+- possibilidade da instalação de **Open5GS** ou **free5GC** para core de rede;
+- possibilidade do uso de **Docker** para empacotamento de serviços de laboratório;
+- possibilidade de análise de tráfego com **Wireshark**, **tcpdump** e **tshark**;
+- possibilidade de testes de conectividade, portas e serviços com **Nmap**;
+- possibilidade do uso de **Git** para versionamento de artefatos das disciplinas;
+- possibilidade da instalação de stacks complementares de desenvolvimento e automação.
 
 ---
 
@@ -241,7 +241,7 @@ A ideia não é só “ter Proxmox instalado”. A ideia é que o LabSim passe a
 - rastreabilidade de alterações;
 - material de apoio para administração.
 
-É o tipo de coisa que evita o clássico laboratório em modo “cada um faz de um jeito e depois ninguém sabe como ficou”.
+É isso permite padronizar o laboratorio clássico “cada um faz de um jeito e depois ninguém sabe como ficou”.Em um laboratorio móderno e replícavel, permitindo a comparação mutua entre sistemas levantados versus sistemas previstos.
 
 ---
 
@@ -364,18 +364,19 @@ qm snapshot 100 pre-teste
 qm listsnapshot 100
 ```
 
-> **Boas práticas:** snapshot antes de experimento arriscado é barato. Reconstruir laboratório sem snapshot é esporte radical.
+> **Boas práticas:** sempre realize um snapshot antes de um experimento ou teste complexo.
 
 ---
 
 ## 15. Verificações básicas após migração de rede
 
-Como o cluster foi migrado de datacenter e os IPs foram alterados manualmente, um checklist mínimo de verificação é altamente recomendado:
+Se um dia o cluster for migrado de datacenter e os IPs foram alterados manualmente, um checklist mínimo de verificação é altamente recomendado:
 
 ### 15.1 Confirmar se todos os nós respondem
 
 ```bash
-ping -c 4 10.17.5.210
+# uma vez sabido os ip's atribuidos a cada uma das maquinas
+ping -c 4 10.17.5.210 # EXEMPLO
 ping -c 4 10.17.5.211
 ping -c 4 10.17.5.212
 ping -c 4 10.17.5.213
@@ -398,6 +399,7 @@ systemctl status pve-cluster corosync pveproxy pvedaemon pvestatd
 
 Abrir no navegador:
 
+> # uma vez sabido os ip's atribuidos a cada uma das maquinas
 - `https://10.17.5.210:8006/`
 - `https://10.17.5.211:8006/`
 - `https://10.17.5.212:8006/`
@@ -535,9 +537,9 @@ Pacotes que podem ser adicionados conforme a necessidade da disciplina:
 
 ## 18. Guia de uso do Datacenter (usuário)
 
-O usuário final não precisa administrar o cluster. Ele precisa saber usar o ambiente sem causar caos operacional.
+Não a necessidade do usuário final (aluno e/ou professsor) administrar o cluster. Basta ele saber ou ter, permissões para usar o ambiente sem causar comprimetimento operacional.
 
-### 18.1 O que o usuário normalmente fará
+### 18.1 O que um usuário comum normalmente fará
 
 - acessar uma VM já disponibilizada;
 - usar console Web ou SSH;
@@ -649,7 +651,7 @@ Mesmo em ambiente didático, segurança não é enfeite.
 
 ### Observação
 
-O objetivo do laboratório é ser flexível, mas flexível não significa desorganizado. Em infraestrutura, liberdade sem governança vira incidente com sotaque acadêmico.
+O objetivo do laboratório é ser flexível, mas flexível não significa desorganização. Em infraestrutura, liberdade sem governança tráz incidentes, logo sempre confirme com um supervisor/administrador: mudanças estruturais.
 
 ---
 
@@ -663,7 +665,7 @@ Ela é importante para:
 - redução de exposição direta da administração;
 - melhor suporte a atividades fora do espaço físico do laboratório.
 
-Essa etapa deve ser tratada como evolução natural do ambiente.
+Essa etapa deve ser tratada sempre com o professor supervisor do ambiente.
 
 ---
 
@@ -722,7 +724,7 @@ Mais do que “ter um Proxmox rodando”, a proposta é consolidar no LabSim um 
 
 ## 26. Autor e contexto acadêmico
 
-Projeto desenvolvido no contexto do estágio de **Gabriel**, aluno concluinte do **Bacharelado em Engenharia de Telecomunicações** na **Universidade Federal do Rio Grande do Norte (UFRN)**, com foco na criação de infraestrutura didática e experimental para o **LabSim**.
+Projeto desenvolvido no contexto do estágio de **Gabriel Barbosa Silva Nunes**, aluno concluinte do **Bacharelado em Engenharia de Telecomunicações**, com supervisão do **Dr. Prof. Vicente Sousa Junior** na **Universidade Federal do Rio Grande do Norte (UFRN)**, com foco na criação de infraestrutura didática e experimental para o **LabSim**.
 
 ---
 
@@ -749,6 +751,7 @@ Definir conforme orientação do laboratório e da universidade.
 ## 29. Referência rápida de acesso
 
 ```text
+# IP's atuais:
 pve1 -> https://10.17.5.210:8006/
 pve2 -> https://10.17.5.211:8006/
 pve3 -> https://10.17.5.212:8006/
